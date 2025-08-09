@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html>
-<body>
-  <p>Session User ID: {{ user.username }}</p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<p>Session User ID: {{ uid }}</p>
+{% endblock %}

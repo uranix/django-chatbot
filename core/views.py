@@ -7,7 +7,9 @@ from core.adapter import YaRuAdapter
 @login_required
 def home(request):
     user = request.user
-    return render(request, 'home.html', context={'user': user})
+    return render(request, 'home.html', context={
+        'uid': user.socialaccount_set.all()[0].uid,
+    })
 
 
 oauth2_login = OAuth2LoginView.adapter_view(YaRuAdapter)

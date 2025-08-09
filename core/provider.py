@@ -8,7 +8,6 @@ class YaRuProvider(OAuth2Provider):
         return str(data['id'])
 
     def extract_common_fields(self, data):
-        print(data)
         return {
             'email': data.get('default_email'),
             'login': data.get('login'),
