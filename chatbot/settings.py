@@ -10,6 +10,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
 if ALLOWED_HOSTS is not None:
     ALLOWED_HOSTS = ALLOWED_HOSTS.split(',')
     CSRF_TRUSTED_ORIGINS = ['https://' + x for x in ALLOWED_HOSTS]
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 else:
     del ALLOWED_HOSTS
 
