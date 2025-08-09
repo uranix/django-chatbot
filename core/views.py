@@ -6,9 +6,9 @@ from core.adapter import YaRuAdapter
 
 @login_required
 def home(request):
-    user = request.user
+    uid = request.user.socialaccount_set.all()[0].uid
     return render(request, 'home.html', context={
-        'uid': user.socialaccount_set.all()[0].uid,
+        'uid': uid,
     })
 
 

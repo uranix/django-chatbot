@@ -1,7 +1,11 @@
 version: '3.8'
 
+networks:
+  openfga:
+
 services:
   web:
+    restart: always
     build: .
     command: >
       sh -c "python manage.py migrate &&
@@ -12,3 +16,34 @@ services:
       - "127.0.0.1:4000:4000"
     env_file:
       - .env
+
+  openfga:
+    restart: always
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    image: openfga/openfga:latest
+    container_name: openfga
+    user: nonroot
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=sqlite
+      - OPENFGA_DATASTORE_URI=file:/home/nonroot/openfga.db
+      - OPENFGA_LOG_FORMAT=json
+    command: run
+    networks:
+      - openfga
+    volumes:
+      - ./data:/home/nonroot
+
+  migrate:
+    image: openfga/openfga:latest
+    container_name: migrate
+    user: nonroot
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=sqlite
+      - OPENFGA_DATASTORE_URI=file:/home/nonroot/openfga.db
+    command: migrate
+    networks:
+      - openfga
+    volumes:
+      - ./data:/home/nonroot
