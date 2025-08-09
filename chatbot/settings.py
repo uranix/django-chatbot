@@ -1,8 +1,12 @@
 import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 SECRET_KEY = os.getenv('SECRET_KEY')
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
+if not DEBUG:
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -17,23 +21,21 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.oauth2',
 ]
 
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 SOCIALACCOUNT_PROVIDERS = {
-    'oauth2': {
-        'SCOPE': ['openid'],
-        'AUTH_PARAMS': {'access_type': 'online'},
+    'yaru': {
         'APP': {
             'client_id': os.getenv('OAUTH_CLIENT_ID'),
             'secret': os.getenv('OAUTH_CLIENT_SECRET'),
-            'key': '',
+            'provider_class': 'core.provider.YaRuProvider',
             'settings': {
-                'authorize_url': 'https://oauth.yandex.ru/authorize',
-                'access_token_url': 'https://oauth.yandex.ru/token',
-                'profile_url': 'https://login.yandex.ru/info',
             }
         }
     }
@@ -42,8 +44,8 @@ SOCIALACCOUNT_PROVIDERS = {
 ROOT_URLCONF = 'chatbot.urls'
 
 # Auth Settings
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'yaru/login/'
+LOGIN_REDIRECT_URL = 'home'
 
 # Required Middleware
 MIDDLEWARE = [
@@ -65,3 +67,11 @@ DATABASES = {
 }
 
 STATIC_URL = '/static/'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+    }
+]

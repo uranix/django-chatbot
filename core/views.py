@@ -1,3 +1,14 @@
+from allauth.socialaccount.providers.oauth2.views import OAuth2LoginView, OAuth2CallbackView
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from core.adapter import YaRuAdapter
 
-# Create your views here.
+
+@login_required
+def home(request):
+    user = request.user
+    return render(request, 'home.html', context={'user': user})
+
+
+oauth2_login = OAuth2LoginView.adapter_view(YaRuAdapter)
+oauth2_callback = OAuth2CallbackView.adapter_view(YaRuAdapter)
