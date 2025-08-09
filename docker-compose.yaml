@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:4000"
+    volumes:
+      - ./data:/data
+    ports:
+      - "127.0.0.1:4000:4000"
+    env_file:
+      - .env
