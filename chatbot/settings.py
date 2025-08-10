@@ -66,7 +66,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'allauth.account.middleware.AccountMiddleware'
+    'allauth.account.middleware.AccountMiddleware',
+    'core.middleware.AuthorizationMiddleware',
 ]
 
 # Database and Static Files
@@ -86,3 +87,6 @@ TEMPLATES = [
         'APP_DIRS': True,
     }
 ]
+
+OPENFGA_STORE_ID = os.getenv('OPENFGA_STORE_ID')
+OPENFGA_MODEL_ID = os.getenv('OPENFGA_MODEL_ID')
