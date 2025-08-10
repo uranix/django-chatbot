@@ -55,7 +55,7 @@ SOCIALACCOUNT_PROVIDERS = {
 ROOT_URLCONF = 'chatbot.urls'
 
 # Auth Settings
-LOGIN_URL = 'login/'
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 
 # Required Middleware
