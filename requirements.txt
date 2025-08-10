@@ -1,7 +1,7 @@
 Django>=4.2
 django-allauth
 requests
-openfga-sdk
+openfga-sdk>=0.9.5
 streamlit
 python-dotenv
 PyJWT
