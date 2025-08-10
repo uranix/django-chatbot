@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+
+{% block content %}
+<div class="login-options">
+  <h2>Choose Login Method</h2>
+
+  <ul>
+    <li><a href="{% url 'yaru_login' %}">Login with Yandex</a></li>
+    <li><a href="{% url 'google_login' %}">Login with Google</a></li>
+  </ul>
+</div>
+
+{% endblock %}

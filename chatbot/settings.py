@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.oauth2',
+    'allauth.socialaccount.providers.google',
 ]
 
 SITE_ID = 1
@@ -41,16 +42,20 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': os.getenv('OAUTH_CLIENT_ID'),
             'secret': os.getenv('OAUTH_CLIENT_SECRET'),
             'provider_class': 'core.provider.YaRuProvider',
-            'settings': {
-            }
         }
+    },
+    'google': {
+        "APP": {
+            "client_id": os.getenv('GOOGLE_OAUTH_CLIENT_ID'),
+            "secret": os.getenv('GOOGLE_OAUTH_CLIENT_SECRET'),
+        },
     }
 }
 
 ROOT_URLCONF = 'chatbot.urls'
 
 # Auth Settings
-LOGIN_URL = 'yaru/login/'
+LOGIN_URL = 'login/'
 LOGIN_REDIRECT_URL = 'home'
 
 # Required Middleware

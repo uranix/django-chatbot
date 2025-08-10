@@ -6,10 +6,14 @@ from core.adapter import YaRuAdapter
 
 @login_required
 def home(request):
-    uid = request.user.socialaccount_set.all()[0].uid
+    uids = [f'{account.uid}/{account.provider}' for account in request.user.socialaccount_set.all()]
     return render(request, 'home.html', context={
-        'uid': uid,
+        'uid': ', '.join(uids),
     })
+
+
+def login(request):
+    return render(request, 'login.html')
 
 
 oauth2_login = OAuth2LoginView.adapter_view(YaRuAdapter)
