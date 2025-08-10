@@ -4,3 +4,4 @@ requests
 openfga-sdk
 streamlit
 python-dotenv
+PyJWT
