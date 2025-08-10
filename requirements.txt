@@ -5,3 +5,4 @@ openfga-sdk
 streamlit
 python-dotenv
 PyJWT
+cryptography
