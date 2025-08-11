@@ -24,7 +24,10 @@ def chat_api(request):
 
 
 def event(**kwargs):
-    return f"data: {json.dumps(kwargs)}\n\n".encode()
+    ev = {}
+    ev['created-at'] = time()
+    ev.update(kwargs)
+    return f"data: {json.dumps(ev)}\n\n".encode()
 
 
 SYSTEM_PROMPT = """
@@ -48,9 +51,7 @@ CACHED_MODEL = None
 
 
 def response_generator(query):
-    print('got request', time())
     yield event(type="user", text=query)
-    print('first response', time())
 
     global CACHED_MODEL
     model = CACHED_MODEL
