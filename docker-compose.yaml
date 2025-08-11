@@ -17,10 +17,13 @@ services:
              python manage.py runserver 0.0.0.0:4000"
     volumes:
       - django:/data
+      - ./model-cache:/model-cache
     ports:
       - "127.0.0.1:4000:4000"
     networks:
       - openfga
+    env:
+      - SENTENCE_TRANSFORMERS_HOME=/model-cache
     env_file:
       - .env
 
