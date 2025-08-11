@@ -1,9 +1,11 @@
 from sentence_transformers import SentenceTransformer
 from langchain.schema import Document
 from pathlib import Path
+from time import time
 import faiss
 import pickle
 import numpy as np
+import threading
 
 
 def load_chunks(file_path: Path) -> list[Document]:
@@ -18,9 +20,12 @@ def load_chunks(file_path: Path) -> list[Document]:
 class ContextLookup:
     def __init__(self, root: str | Path):
         root = Path(root)
+        t1 = time()
         self.index = faiss.read_index(str(root / "book.index"))
         self.chunks = load_chunks(root / "book_chunks.pkl")
         self.model = SentenceTransformer("intfloat/multilingual-e5-large")
+        t2 = time()
+        print(f'Model loaded in {t2 - t1:.1f} seconds')
         self.k = 30
         self.threshold = 0.65
 

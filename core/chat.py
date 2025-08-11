@@ -44,13 +44,19 @@ SYSTEM_PROMPT = """
 6. Фрагменты контекста отсортированы по порядку встречания в книге
 """
 
+CACHED_MODEL = None
+
 
 def response_generator(query):
     print('got request', time())
     yield event(type="user", text=query)
     print('first response', time())
 
-    model: ContextLookup = settings.MODEL
+    global CACHED_MODEL
+    model = CACHED_MODEL
+    if model is None:
+        model = ContextLookup(settings.DATA_PATH)
+        CACHED_MODEL = model
     results = model.lookup(query)
 
     prompt = ['ВОПРОС:', query]
