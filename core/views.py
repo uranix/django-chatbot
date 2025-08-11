@@ -25,10 +25,7 @@ def require_perm(relation, domain):
 @login_required
 @require_perm(relation="member", domain="chatbot")
 def home(request):
-    uids = [f'{account.uid}/{account.provider}' for account in request.user.socialaccount_set.all()]
-    return render(request, 'home.html', context={
-        'uid': ', '.join(uids),
-    })
+    return render(request, 'chat.html')
 
 
 def login(request):

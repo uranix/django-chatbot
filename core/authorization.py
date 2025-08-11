@@ -32,4 +32,4 @@ class AuthorizationClient:
 
         response = self.client.check(body)
 
-        return response.allowed
+        return response.allowed  # type: ignore

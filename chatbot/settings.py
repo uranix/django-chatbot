@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from core.model import ContextLookup
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -90,3 +91,6 @@ TEMPLATES = [
 
 OPENFGA_STORE_ID = os.getenv('OPENFGA_STORE_ID')
 OPENFGA_MODEL_ID = os.getenv('OPENFGA_MODEL_ID')
+
+MODEL = ContextLookup(os.getenv("DATA_PATH", "."))
+DEEPSEEK_TOKEN = os.getenv("DEEPSEEK_TOKEN")
