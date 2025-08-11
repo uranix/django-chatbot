@@ -2,11 +2,14 @@ from django.http import JsonResponse, StreamingHttpResponse
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
 from core.model import ContextLookup
+from core.views import login_required, require_perm
 from time import time
 import json
 import requests
 
 
+@login_required
+@require_perm(relation="member", domain="chatbot")
 @require_http_methods(["GET"])
 def chat_api(request):
     try:
@@ -43,7 +46,9 @@ SYSTEM_PROMPT = """
 
 
 def response_generator(query):
+    print('got request', time())
     yield event(type="user", text=query)
+    print('first response', time())
 
     model: ContextLookup = settings.MODEL
     results = model.lookup(query)
