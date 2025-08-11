@@ -43,13 +43,12 @@ SYSTEM_PROMPT = """
 
 
 def response_generator(query):
+    yield event(type="user", text=query)
+
     model: ContextLookup = settings.MODEL
-    token = settings.DEEPSEEK_TOKEN
     results = model.lookup(query)
 
     prompt = ['ВОПРОС:', query]
-
-    yield event(type="user", text=query)
 
     prompt.append('')
     prompt.append('КОНТЕКСТ:')
@@ -72,6 +71,7 @@ def response_generator(query):
     t1 = time()
     usage = None
     try:
+        token = settings.DEEPSEEK_TOKEN
         response = requests.post(
             "https://api.deepseek.com/v1/chat/completions",
             headers={"Authorization": f"Bearer {token}"},
@@ -79,7 +79,8 @@ def response_generator(query):
                 "model": "deepseek-chat",
                 "messages": messages,
                 "temperature": 0.3,
-            }
+            },
+            timeout=60,
         )
         response.raise_for_status()
 
@@ -107,6 +108,8 @@ def response_generator(query):
         cost = cost / 1e6
         meta = meta + f', cost: {cost:.3f}¢'
 
-    yield event(type="assistant", help=meta, text=ai_response)
+    ai_response = ai_response + "\n\n_" + meta + "_"
+
+    yield event(type="assistant", text=ai_response)
 
     yield b"event: close\ndata: \n\n"

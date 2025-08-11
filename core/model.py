@@ -33,11 +33,15 @@ class ContextLookup:
         for i, (score, idx) in enumerate(zip(scores[0], indices[0])):
             if score >= self.threshold:
                 doc = self.chunks[idx]
+                source = doc.metadata['source']
+                source = source.removeprefix('books/')
+                source = source.removesuffix('.txt')
+                source = source.replace('_', ' ')
                 results.append({
                     "rank": i+1,
                     "score": float(score),
                     "text": doc.page_content,
-                    "source": doc.metadata['source'],
+                    "source": source,
                     "idx": idx,
                 })
         results.sort(key=lambda x: x['idx'])

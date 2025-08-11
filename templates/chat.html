@@ -41,6 +41,11 @@
     margin-right: auto;
   }
 
+  .message-system {
+    background: #ffcece;
+    margin-right: auto;
+  }
+
   .message-context {
     background: #e8f5e9;
     margin-left: auto;
@@ -155,7 +160,7 @@
     eventSource.onerror = (e) => {
       console.log(e);
       eventSource.close();
-      appendMessage('Error: Connection closed', 'context', 'Error');
+      appendMessage('Error: Connection closed', 'system');
     };
 
     eventSource.addEventListener('close', () => {
