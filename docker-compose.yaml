@@ -14,7 +14,7 @@ services:
     container_name: chatbot-web
     command: >
       sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:4000"
+             python manage.py runserver 0.0.0.0:4000 --noreload --nothreading"
     volumes:
       - django:/data
       - ../bookdata:/bookdata
