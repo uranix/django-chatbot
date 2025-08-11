@@ -17,6 +17,7 @@ services:
              python manage.py runserver 0.0.0.0:4000"
     volumes:
       - django:/data
+      - ./bookdata:/bookdata
       - ./model-cache:/model-cache
     ports:
       - "127.0.0.1:4000:4000"
