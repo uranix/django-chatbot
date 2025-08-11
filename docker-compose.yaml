@@ -23,7 +23,7 @@ services:
       - "127.0.0.1:4000:4000"
     networks:
       - openfga
-    env:
+    environment:
       - SENTENCE_TRANSFORMERS_HOME=/model-cache
     env_file:
       - .env
