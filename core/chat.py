@@ -106,12 +106,12 @@ def response_generator(query):
     meta = f'{t2 - t1:.1f} sec'
     # https://api-docs.deepseek.com/quick_start/pricing/
     # 1M TOKENS INPUT (hit)  7c
-    # 1M TOKENS INPUT (miss) 27c
-    # 1M TOKENS OUTPUT       110c
+    # 1M TOKENS INPUT (miss) 56c
+    # 1M TOKENS OUTPUT       168c
     prices = {
         'prompt_cache_hit_tokens': 7,
-        'prompt_cache_miss_tokens': 27,
-        'completion_tokens': 110,
+        'prompt_cache_miss_tokens': 56,
+        'completion_tokens': 168,
     }
     if usage:
         cost = 0
